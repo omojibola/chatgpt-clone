@@ -7,8 +7,6 @@ const page = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [prompt, setPrompt] = useState<string>('');
 
-  ('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');
-
   function hideSidebar() {
     let sidebar = window.document?.querySelector<HTMLElement>(
       '.chat-wrapper__sidebar'
