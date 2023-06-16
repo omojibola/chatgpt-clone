@@ -1,0 +1,30 @@
+.dropdown-container {
+  position: relative;
+
+  &__dropdown {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(1rem);
+    gap: 4px;
+
+    & a {
+      color: var(--color-yellow);
+      text-decoration: none;
+      font-size: 1.1rem;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+    }
+
+    &__link {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+  }
+}

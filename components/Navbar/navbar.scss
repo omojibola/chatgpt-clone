@@ -1,0 +1,72 @@
+.navbar {
+  padding-top: 1.375rem;
+  padding-bottom: 1.375rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  gap: 8%;
+  margin-right: 24px;
+  margin-left: 24px;
+
+  &__middle {
+    @media (max-width: 1279px) {
+      display: none;
+    }
+    &__container {
+      display: flex;
+      flex-wrap: wrap;
+      list-style-type: none;
+      align-items: baseline;
+      gap: 18px;
+
+      &__li {
+        &__btn {
+          all: unset;
+          display: flex;
+          align-items: center;
+          font-size: 1.1rem;
+          cursor: pointer;
+
+          & span {
+            line-height: 3px;
+            cursor: pointer;
+            &:hover {
+              text-decoration-line: underline;
+              text-underline-offset: 4px;
+            }
+          }
+
+          // gap: 5px;
+        }
+        &__signup {
+          border: 2px solid transparent;
+          background: transparent;
+          font-size: 1.1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding-left: 0.625rem;
+          padding-right: 0.625rem;
+          padding-bottom: 0.3125rem;
+          padding-top: 0.1875rem;
+        }
+      }
+    }
+  }
+
+  &__right {
+    margin-left: auto;
+
+    @media (max-width: 1279px) {
+      display: none;
+    }
+  }
+}
+
+.hide-on-l {
+  display: none;
+
+  @media (max-width: 1279px) {
+    display: block;
+  }
+}

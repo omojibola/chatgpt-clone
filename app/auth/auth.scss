@@ -1,0 +1,81 @@
+.auth {
+  width: 100%;
+  height: 100vh;
+  background: #343541;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__section {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    width: 24rem;
+
+    &__logo {
+      margin-bottom: 1.25rem;
+    }
+
+    &__welcome {
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    &__login-text {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    &__btn-wrapper {
+      display: flex;
+      gap: 0.75rem;
+
+      &__btn {
+        align-items: center;
+        border-color: transparent;
+        border-radius: 0.25rem;
+        border-width: 1px;
+        display: inline-flex;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        padding: 0.5rem 0.75rem;
+        pointer-events: auto;
+        background: rgba(16, 163, 127, 1);
+        color: #fff;
+        cursor: pointer;
+
+        &:hover {
+          background: #1b7f64;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    display: flex;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    padding-bottom: 0.75rem;
+    padding-top: 0.75rem;
+
+    & a {
+      --tw-text-opacity: 1;
+      color: rgba(142, 142, 160, var(--tw-text-opacity));
+      text-decoration: none;
+    }
+
+    & .mx-3 {
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+  }
+}
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgba(86, 88, 105, var(--tw-text-opacity));
+}

@@ -1,0 +1,22 @@
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+
+  &__text {
+    font-size: 60px;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+  }
+}
+
+.typed-cursor {
+  font-size: 120px;
+}
+
+.typed-cursor--blink {
+  animation: none !important;
+}
