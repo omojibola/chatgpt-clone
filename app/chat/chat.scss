@@ -1,0 +1,14 @@
+.chat-wrapper {
+  display: flex;
+  width: 100%;
+
+  &__sidebar {
+    background: #202123;
+    width: 260px;
+    height: 100vh;
+  }
+
+  &__chat-section {
+    background: #343541;
+  }
+}

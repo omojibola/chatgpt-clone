@@ -1,0 +1,324 @@
+.login-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 0 0;
+    flex: 0 0 auto;
+    & svg {
+      width: 32px;
+      height: 32px;
+      fill: #202123;
+    }
+  }
+
+  &__form-section {
+    // height: 100vh;
+    width: 100%;
+    padding: 80px;
+
+    &__widget {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &__form {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        width: 320px;
+
+        & header {
+          padding: 40px 40px 24px;
+          line-height: 1.5;
+          text-align: center;
+          flex-shrink: 0;
+
+          & h1 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2d333a;
+            letter-spacing: 0;
+          }
+        }
+
+        &__input-wrapper {
+          width: 100%;
+          position: relative;
+
+          &__label {
+            position: absolute;
+            left: 10px;
+            top: 14px;
+            transition: all 0.2s;
+            padding: 0 2px;
+            z-index: 1;
+            color: #b3b3b3;
+
+            &::before {
+              content: '';
+              height: 5px;
+              background: #272530;
+              position: absolute;
+              left: 0;
+              top: 10px;
+              width: 100%;
+              z-index: -1;
+            }
+          }
+
+          &__input {
+            padding: 0.8rem;
+            width: 100%;
+            height: 100px;
+            border: 2px solid #382f26;
+            background: #fff;
+            border-radius: 3px;
+            outline: none;
+            transition: all 0.3s;
+            color: red;
+
+            &:focus {
+              border: 2px solid #10a37f;
+
+              &::placeholder {
+                opacity: 1;
+                animation-delay: 0.2s;
+              }
+            }
+
+            &::placeholder {
+              opacity: 0;
+              transition: all 0.3s;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.input-container {
+  width: 100%;
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  transition: all 0.2s;
+  padding: 0 2px;
+  z-index: 1;
+  color: #b3b3b3;
+
+  &::before {
+    content: '';
+    height: 5px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+.text-input {
+  padding: 0.8rem;
+  width: 100%;
+  height: 52px;
+  border: 1px solid #c2c8d0;
+  background: #fff;
+  border-radius: 3px;
+  outline: none;
+  transition: all 0.3s;
+  color: #2d333a;
+  font-size: 16px;
+
+  &::placeholder {
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  &:focus {
+    border: 1px solid #10a37f;
+
+    &::placeholder {
+      opacity: 0;
+      animation-delay: 0.2s;
+    }
+  }
+}
+
+.text-input:focus + .label,
+.filled {
+  top: -10px;
+  color: #10a37f;
+  font-size: 14px;
+}
+
+.login-btn {
+  margin-top: 24px;
+  color: #ffffff;
+  background-color: #10a37f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  padding: 4px 16px;
+  min-height: 52px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  outline: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 3px;
+  transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+
+  &:hover {
+    background: #1b7f64;
+  }
+}
+
+.alternate-action {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+
+  & p {
+    color: #2d333a;
+
+    & a {
+      color: #10a37f;
+      padding: 4px;
+      text-decoration: none;
+    }
+  }
+}
+
+.or-span {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  text-transform: uppercase;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 0;
+  padding: 24px 0 0;
+
+  &::before,
+  &::after {
+    content: '';
+    border-bottom: 1px solid #c2c8d0;
+    flex: 1 0 auto;
+    height: 0.7em;
+    margin: 0;
+  }
+
+  & span {
+    text-align: center;
+    flex: 0.2 0 auto;
+    margin: 0;
+  }
+}
+
+.other-btns-wrapper {
+  margin-top: 24px;
+
+  &__btn {
+    width: 100%;
+    display: flex;
+    position: relative;
+    padding: 0 8px 0 52px;
+    background: #fff;
+    align-items: center;
+    width: 100%;
+    font-size: 14px;
+    height: 52px;
+    border: 1px solid #c2c8d0;
+    border-radius: 3px;
+    color: #2d333a;
+    cursor: pointer;
+    outline: 0;
+    transition: box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out;
+    margin-bottom: 8px;
+
+    &:hover {
+      background: #e5e5e5;
+    }
+  }
+
+  &__icon[data-provider^='google'] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: absolute;
+    left: 26px;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-image: url('/google.svg');
+  }
+
+  &__icon[data-provider^='microsoft'] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: absolute;
+    left: 26px;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-image: url('/microsoft.svg');
+  }
+
+  &__icon[data-provider^='apple'] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    position: absolute;
+    left: 26px;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-image: url('/apple.svg');
+  }
+}
+
+.i-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6e6e80;
+  padding: 12px 0 24px;
+  flex: 0 0 auto;
+  margin-top: auto;
+
+  & a {
+    color: #10a37f;
+    margin: 0 10px;
+    text-decoration: none;
+    line-height: 1.5;
+    font-size: 14px;
+  }
+}
