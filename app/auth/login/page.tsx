@@ -1,7 +1,18 @@
+'use client';
 import { Logo } from '@/icons';
 import './login.scss';
+import { signIn } from 'next-auth/react';
 
-const page = () => {
+const Login = async () => {
+  //sign in function
+  const googleSignIn = () => {
+    try {
+      signIn('google');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className='login-wrapper'>
       <div className='login-wrapper__logo'>
@@ -44,7 +55,10 @@ const page = () => {
               <span>Or</span>
             </div>
             <div className='other-btns-wrapper'>
-              <button className='other-btns-wrapper__btn'>
+              <button
+                className='other-btns-wrapper__btn'
+                onClick={googleSignIn}
+              >
                 <span
                   className='other-btns-wrapper__icon'
                   data-provider='google'
@@ -89,4 +103,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Login;
