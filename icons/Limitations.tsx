@@ -3,7 +3,7 @@ const Limitations = () => {
     <svg
       stroke='currentColor'
       fill='none'
-      stroke-width='1.5'
+      strokeWidth='1.5'
       viewBox='0 0 24 24'
       strokeLinecap='round'
       strokeLinejoin='round'

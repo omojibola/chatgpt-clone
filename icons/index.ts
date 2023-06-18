@@ -7,6 +7,10 @@ import User from './User';
 import Light from './Light';
 import Thunder from './Thunder';
 import Limitations from './Limitations';
+import ThreeDots from './ThreeDots';
+import Clipboard from './Clipboard';
+import LikeIcon from './LikeIcon';
+import DislikeIcon from './DislikeIcon';
 
 export {
   Logo,
@@ -18,4 +22,8 @@ export {
   Light,
   Thunder,
   Limitations,
+  ThreeDots,
+  Clipboard,
+  LikeIcon,
+  DislikeIcon,
 };

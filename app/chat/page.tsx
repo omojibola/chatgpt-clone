@@ -1,11 +1,42 @@
 'use client';
-import { useState } from 'react';
-import { Light, Limitations, PlusIcon, Thunder, User } from '@/icons';
+import { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
+import { PlusIcon, ThreeDots, User } from '@/icons';
+import { useSession, signOut } from 'next-auth/react';
 import './chat.scss';
+import { collection, orderBy, query } from 'firebase/firestore';
+import { db } from '@/firebase';
+import ChatDefault from '@/components/ChatDefault/ChatDefault';
+import ChatSection from '@/components/ChatSection/ChatSection';
+import Image from 'next/image';
+import { useCollection } from 'react-firebase-hooks/firestore';
 
+type dataProps = {
+  id: string;
+  data: any;
+};
 const page = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
+  const [promptLoading, setPromptLoading] = useState(false);
+  const [texts, setTexts] = useState<dataProps[]>([]);
   const [prompt, setPrompt] = useState<string>('');
+  const { data: session } = useSession();
+
+  const [chats, loading, error] = useCollection(
+    session &&
+      query(
+        collection(db, 'users', session?.user?.email!, 'chats'),
+        orderBy('createdAt', 'asc')
+      )
+  );
+
+  // console.log(chats?.docs[2]?.data());
+
+  useEffect(() => {
+    chats?.docs?.forEach((doc) => {
+      setTexts([...texts, { id: doc.id, data: doc.data() }]);
+    });
+  }, [chats]);
 
   function hideSidebar() {
     let sidebar = window.document?.querySelector<HTMLElement>(
@@ -15,8 +46,10 @@ const page = () => {
     if (sidebar === null) {
       return;
     } else {
+      sidebar.style.position = 'none';
       sidebar.style.width = '0px';
       sidebar.style.padding = '0px';
+
       setShowSidebar(false);
     }
   }
@@ -34,6 +67,32 @@ const page = () => {
       setShowSidebar(true);
     }
   }
+
+  //ask question
+  const askQuestion = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!prompt) return;
+
+    const text = prompt.trim();
+    const model = 'gpt-3.5-turbo';
+
+    //toast
+    try {
+      setPromptLoading(true);
+      let res = await axios.post('/api/askQuestion', {
+        prompt: text,
+        chatId: 'id',
+        model,
+        session,
+      });
+      setPrompt('');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPromptLoading(false);
+    }
+  };
+
   return (
     <div className='chat-wrapper'>
       <div className='chat-wrapper__sidebar'>
@@ -95,6 +154,29 @@ const page = () => {
               <span className='badge-new'>NEW</span>
             </span>
           </button>
+
+          <button
+            className='chat-wrapper__sidebar__footer__top-btn'
+            onClick={() => signOut()}
+          >
+            {session && (
+              <span className='chat-wrapper__sidebar__footer__top-btn__wrapper'>
+                <span className='chat-wrapper__sidebar__footer__top-btn__wrapper__user'>
+                  <Image
+                    src={session?.user?.image!}
+                    alt='profile picture'
+                    width={20}
+                    height={20}
+                  />
+                  <p>{session?.user?.name}</p>
+                </span>
+
+                <span className='three-dots'>
+                  <ThreeDots />
+                </span>
+              </span>
+            )}
+          </button>
         </div>
       </div>
       <div className='chat-wrapper__chat-section'>
@@ -122,82 +204,17 @@ const page = () => {
             </button>
           </span>
         )}
-        <section className='chat-wrapper__chat-section__center'>
-          <div className='chat-wrapper__chat-section__center__heading'>
-            <h1>ChatGPT</h1>
-          </div>
-          <div className='chat-wrapper__chat-section__center__list'>
-            <div className='chat-wrapper__chat-section__center__list__section'>
-              <div className='chat-wrapper__chat-section__center__list__section__top'>
-                <Light />
-                <p>Examples</p>
-              </div>
+        {chats?.docs?.length > 0 ? (
+          <ChatSection session={session} texts={chats?.docs} />
+        ) : (
+          <ChatDefault />
+        )}
 
-              <ul className='chat-wrapper__chat-section__center__list__section__list'>
-                <button
-                  className='chat-wrapper__chat-section__center__list__section__btn'
-                  role='button'
-                >
-                  "Explain quantum computing in simple terms →"
-                </button>
-
-                <button
-                  className='chat-wrapper__chat-section__center__list__section__btn'
-                  role='button'
-                >
-                  "Got any creative ideas for a 10 year old’s birthday? →"
-                </button>
-
-                <button
-                  className='chat-wrapper__chat-section__center__list__section__btn'
-                  role='button'
-                >
-                  "How do I make an HTTP request in Javascript?"
-                </button>
-              </ul>
-            </div>
-
-            <div className='chat-wrapper__chat-section__center__list__section'>
-              <div className='chat-wrapper__chat-section__center__list__section__top'>
-                <Thunder />
-                <p>Capabilities</p>
-              </div>
-              <ul className='chat-wrapper__chat-section__center__list__section__list'>
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  Remembers what user said earlier in the conversation
-                </button>
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  Allows user to provide follow-up corrections
-                </button>
-
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  Trained to decline inappropriate requests
-                </button>
-              </ul>
-            </div>
-
-            <div className='chat-wrapper__chat-section__center__list__section'>
-              <div className='chat-wrapper__chat-section__center__list__section__top'>
-                <Limitations />
-                <p>Limitation</p>
-              </div>
-              <ul className='chat-wrapper__chat-section__center__list__section__list'>
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  May occasionally generate incorrect information
-                </button>
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  May occasionally produce harmful instructions or biased
-                  content
-                </button>
-                <button className='chat-wrapper__chat-section__center__list__section__btn'>
-                  Limited knowledge of world and events after 2021
-                </button>
-              </ul>
-            </div>
-          </div>
-        </section>
         <footer className='chat-wrapper__chat-section__footer'>
-          <form className='chat-wrapper__chat-section__footer__input-wrapper'>
+          <form
+            className='chat-wrapper__chat-section__footer__input-wrapper'
+            onSubmit={askQuestion}
+          >
             <div className='chat-wrapper__chat-section__footer__input-wrapper__area'>
               <input
                 id='prompt-textarea'
@@ -205,6 +222,7 @@ const page = () => {
                 data-id='root'
                 placeholder='Send a message'
                 className=''
+                value={prompt}
                 style={{
                   maxHeight: '200px',
                   height: '24px',
@@ -212,26 +230,31 @@ const page = () => {
                 }}
                 onChange={(e) => setPrompt(e.target.value)}
               />
-              <button
-                className={`chat-wrapper__chat-section__footer__input-wrapper__area__${
-                  prompt ? 'active-btn' : 'btn'
-                }`}
-              >
-                <span className=''>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 16 16'
-                    fill='none'
-                    className='h-4 w-4 m-1 md:m-0'
-                    stroke-width='2'
-                  >
-                    <path
-                      d='M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z'
-                      fill='currentColor'
-                    ></path>
-                  </svg>
-                </span>
-              </button>
+
+              {promptLoading ? (
+                <img src={'/gear.svg'} alt='' />
+              ) : (
+                <button
+                  className={`chat-wrapper__chat-section__footer__input-wrapper__area__${
+                    prompt ? 'active-btn' : 'btn'
+                  }`}
+                >
+                  <span className=''>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      viewBox='0 0 16 16'
+                      fill='none'
+                      className='h-4 w-4 m-1 md:m-0'
+                      strokeWidth='2'
+                    >
+                      <path
+                        d='M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z'
+                        fill='currentColor'
+                      ></path>
+                    </svg>
+                  </span>
+                </button>
+              )}
             </div>
           </form>
           <div className='chat-wrapper__chat-section__footer__small-text'>
