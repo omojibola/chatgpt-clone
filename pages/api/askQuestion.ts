@@ -27,8 +27,10 @@ export default async function handler(
   //chatgpt query
   const response = await query(prompt, chatId, model);
 
-  const question: Message = {
+  const message: Message = {
     text: prompt,
+    response: response || 'ChatGPT could not find an answer for that',
+    createdAt: serverTimestamp(),
     user: {
       _id: session?.user?.email!,
       name: session?.user?.name!,
@@ -38,7 +40,6 @@ export default async function handler(
 
   const chatgptRes: Message = {
     text: response || 'ChatGPT could not find an answer for that',
-
     user: {
       _id: 'chatgpt',
       name: 'chatgpt',
@@ -46,11 +47,16 @@ export default async function handler(
     },
   };
 
-  await addDoc(collection(db, 'users', session?.user?.email!, 'chats'), {
-    createdAt: serverTimestamp(),
-    question,
-    chatgptRes,
-  });
+  await addDoc(
+    collection(db, 'users', session?.user?.email!, 'chats', chatId, 'messages'),
+    message
+  );
+
+  // await addDoc(collection(db, 'users', session?.user?.email!, 'chats'), {
+  //   createdAt: serverTimestamp(),
+  //   question,
+  //   chatgptRes,
+  // });
 
   //   await adminDb
   //     .collection('users')

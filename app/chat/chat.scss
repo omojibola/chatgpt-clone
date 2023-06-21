@@ -16,6 +16,10 @@
     -webkit-transition: width 0.2s; /* Safari and Chrome */
     -o-transition: width 0.2s;
 
+    @media (max-width: 1010px) {
+      display: none;
+    }
+
     &__nav {
       &__top {
         display: flex;
@@ -54,6 +58,26 @@
     }
 
     &__history {
+      &__row {
+        &__btn {
+          width: 100%;
+          cursor: pointer;
+          border-radius: 0.375rem;
+          color: rgba(236, 236, 241, 1);
+          padding: 0.75rem;
+          background-color: rgba(32, 33, 35, 1);
+          border: none;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 14px;
+          text-decoration: none;
+
+          &:hover {
+            background: #343541;
+          }
+        }
+      }
     }
 
     &__footer {
@@ -134,6 +158,12 @@
         align-items: flex-start;
         text-align: center;
 
+        @media (max-width: 576px) {
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 120px;
+        }
+
         &__section {
           &__top {
             margin-bottom: 0.875rem;
@@ -181,6 +211,10 @@
       );
       width: 100%;
 
+      @media (max-width: 1010px) {
+        padding: 0 14px;
+      }
+
       &__input-wrapper {
         max-width: 48rem;
         margin-left: auto;
@@ -188,6 +222,10 @@
         position: relative;
         right: 10%;
         width: 100%;
+
+        @media (max-width: 1010px) {
+          right: 0;
+        }
 
         &__area {
           flex: 1 1 0%;
@@ -254,6 +292,10 @@
         font-size: 0.75rem;
         line-height: 1rem;
         text-align: center;
+
+        @media (max-width: 1010px) {
+          right: 0;
+        }
 
         & a {
           color: rgba(197, 197, 210, 1);

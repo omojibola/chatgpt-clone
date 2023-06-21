@@ -11,6 +11,7 @@ import ThreeDots from './ThreeDots';
 import Clipboard from './Clipboard';
 import LikeIcon from './LikeIcon';
 import DislikeIcon from './DislikeIcon';
+import Comment from './Comment';
 
 export {
   Logo,
@@ -26,4 +27,5 @@ export {
   Clipboard,
   LikeIcon,
   DislikeIcon,
+  Comment,
 };

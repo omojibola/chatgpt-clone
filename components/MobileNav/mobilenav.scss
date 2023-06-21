@@ -1,0 +1,20 @@
+.m-nav {
+  background: #343541;
+  justify-content: space-between;
+  padding: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: rgba(217, 217, 227, 1);
+  border-bottom: 0.5px solid rgba(217, 217, 227, 1);
+  display: none;
+
+  @media (max-width: 1010px) {
+    display: flex;
+  }
+
+  &__btn {
+    background: #343541;
+    border: none;
+    color: rgba(217, 217, 227, 1);
+  }
+}

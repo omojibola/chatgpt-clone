@@ -2,44 +2,34 @@
 import { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import './chat.scss';
 import { collection, orderBy, query } from 'firebase/firestore';
 import { db } from '@/firebase';
 import ChatDefault from '@/components/ChatDefault/ChatDefault';
-
+import ChatSection from '@/components/ChatSection/ChatSection';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import Mobilenav from '@/components/MobileNav/Mobilenav';
-import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { generateRandomNumberWithDate } from '@/lib/utils';
 
 type dataProps = {
   id: string;
   data: any;
+  params: {
+    id: string;
+  };
 };
-const page = () => {
+const page = ({ params: { id } }: dataProps) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [promptLoading, setPromptLoading] = useState(false);
-  const [texts, setTexts] = useState<dataProps[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const { data: session } = useSession();
 
-  const router = useRouter();
-  const [chats, loading, error] = useCollection(
+  const [chats] = useCollection(
     session &&
       query(
-        collection(db, 'users', session?.user?.email!, 'chats'),
+        collection(db, 'users', session?.user?.email!, 'chats', id, 'messages'),
         orderBy('createdAt', 'asc')
       )
   );
-
-  // console.log(chats?.docs[2]?.data());
-
-  useEffect(() => {
-    chats?.docs?.forEach((doc) => {
-      setTexts([...texts, { id: doc.id, data: doc.data() }]);
-    });
-  }, [chats]);
 
   function hideSidebar() {
     let sidebar = window.document?.querySelector<HTMLElement>(
@@ -84,7 +74,7 @@ const page = () => {
       setPromptLoading(true);
       let res = await axios.post('/api/askQuestion', {
         prompt: text,
-        chatId: generateRandomNumberWithDate(),
+        chatId: id,
         model,
         session,
       });
@@ -126,8 +116,11 @@ const page = () => {
               </button>
             </span>
           )}
-
-          <ChatDefault />
+          {chats?.docs?.length > 0 ? (
+            <ChatSection session={session} texts={chats?.docs} />
+          ) : (
+            <ChatDefault />
+          )}
 
           <footer className='chat-wrapper__chat-section__footer'>
             <form
