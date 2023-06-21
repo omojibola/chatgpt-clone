@@ -12,6 +12,7 @@ import Clipboard from './Clipboard';
 import LikeIcon from './LikeIcon';
 import DislikeIcon from './DislikeIcon';
 import Comment from './Comment';
+import Close from './Close';
 
 export {
   Logo,
@@ -28,4 +29,5 @@ export {
   LikeIcon,
   DislikeIcon,
   Comment,
+  Close,
 };

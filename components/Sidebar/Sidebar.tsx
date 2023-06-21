@@ -40,6 +40,8 @@ const Sidebar = ({ hideSidebar }: { hideSidebar: () => void }) => {
     router.push(`/chat/${doc.id}`);
   };
 
+  console.log(chats);
+
   return (
     <div className='chat-wrapper__sidebar'>
       <nav className='chat-wrapper__sidebar__nav'>

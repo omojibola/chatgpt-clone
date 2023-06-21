@@ -15,6 +15,9 @@ const Login = async () => {
 
   return (
     <div className='login-wrapper'>
+      <p style={{ marginTop: '24px' }}>
+        Please use only google sign in, I have not implemented the others :)
+      </p>
       <div className='login-wrapper__logo'>
         <Logo />
       </div>

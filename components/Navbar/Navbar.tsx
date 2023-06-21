@@ -12,7 +12,7 @@ const Navbar = () => {
         <ul className='navbar__middle__container'>
           {links.map((link) => (
             <li key={link.id} className='navbar__middle__container__li'>
-              <NavDropdown link={link.name} children={link.children} />
+              <NavDropdown link={link.name} items={link.items} />
             </li>
           ))}
         </ul>

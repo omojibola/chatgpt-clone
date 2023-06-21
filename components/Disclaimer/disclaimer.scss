@@ -1,0 +1,23 @@
+.disclaimer {
+  display: flex;
+  width: 70%;
+  //height: 10px;
+  background: #fff;
+  border-radius: 5px;
+  display: flex;
+  margin: 12px auto;
+  padding: 10px;
+  justify-content: space-between;
+
+  & p {
+    color: #343541;
+    font-size: 14px;
+  }
+
+  & button {
+    background: none;
+    border: none;
+    height: 0;
+    cursor: pointer;
+  }
+}

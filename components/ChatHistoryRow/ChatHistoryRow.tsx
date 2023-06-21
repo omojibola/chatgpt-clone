@@ -17,7 +17,7 @@ const ChatHistoryRow = ({ id }: { id: string }) => {
   useEffect(() => {
     if (!pathname) return;
     setActive(pathname.includes(id));
-  }, [pathname]);
+  }, [pathname, id]);
 
   const [messages] = useCollection(
     session &&

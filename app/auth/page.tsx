@@ -4,7 +4,7 @@ import { Logo } from '@/icons';
 import './auth.scss';
 import { useRouter } from 'next/navigation';
 
-const page = () => {
+const Auth = () => {
   const router = useRouter();
   return (
     <div className='auth'>
@@ -49,4 +49,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Auth;

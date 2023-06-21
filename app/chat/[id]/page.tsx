@@ -9,18 +9,13 @@ import ChatSection from '@/components/ChatSection/ChatSection';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import Mobilenav from '@/components/MobileNav/Mobilenav';
 import Sidebar from '@/components/Sidebar/Sidebar';
+import Disclaimer from '@/components/Disclaimer/Disclaimer';
 
-type dataProps = {
-  id: string;
-  data: any;
-  params: {
-    id: string;
-  };
-};
-const page = ({ params: { id } }: dataProps) => {
+const Chat = ({ params: { id } }: any) => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [promptLoading, setPromptLoading] = useState(false);
   const [prompt, setPrompt] = useState<string>('');
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
   const { data: session } = useSession();
 
   const [chats] = useCollection(
@@ -86,12 +81,19 @@ const page = ({ params: { id } }: dataProps) => {
     }
   };
 
+  //close disclaimer
+  const hideDisclaimer = () => {
+    setShowDisclaimer(false);
+  };
+
   return (
     <>
       <Mobilenav />
       <div className='chat-wrapper'>
         <Sidebar hideSidebar={hideSidebar} />
         <div className='chat-wrapper__chat-section'>
+          <Disclaimer close={hideDisclaimer} showDisclaimer={showDisclaimer} />
+
           {!showSidebar && (
             <span className=''>
               <button
@@ -116,7 +118,7 @@ const page = ({ params: { id } }: dataProps) => {
               </button>
             </span>
           )}
-          {chats?.docs?.length > 0 ? (
+          {chats?.docs?.length! > 0 ? (
             <ChatSection session={session} texts={chats?.docs} />
           ) : (
             <ChatDefault />
@@ -190,4 +192,4 @@ const page = ({ params: { id } }: dataProps) => {
   );
 };
 
-export default page;
+export default Chat;

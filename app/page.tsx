@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     router.push('/auth/');
-  }, []);
+  }, [router]);
 
   return (
     <main className='nav-hero' style={{ background: '#015453' }}>

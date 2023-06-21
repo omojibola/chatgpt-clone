@@ -1,9 +1,9 @@
 export const links = [
-  { id: 1, name: 'Research', children: ['Overview', 'Index'] },
+  { id: 1, name: 'Research', items: ['Overview', 'Index'] },
   {
     id: 2,
     name: 'Product',
-    children: [
+    items: [
       'Overview',
       'ChatGPT',
       'GPT-4',
@@ -16,17 +16,17 @@ export const links = [
   {
     id: 3,
     name: 'Developers',
-    children: ['Overview', 'Documentation', 'API reference', 'Examples'],
+    items: ['Overview', 'Documentation', 'API reference', 'Examples'],
   },
   {
     id: 4,
     name: 'Safety',
-    children: null,
+    items: null,
   },
 
   {
     id: 5,
     name: 'Company',
-    children: ['About', 'Blog', 'Careers', 'Charter', 'Security'],
+    items: ['About', 'Blog', 'Careers', 'Charter', 'Security'],
   },
 ];

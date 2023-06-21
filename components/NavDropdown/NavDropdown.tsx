@@ -7,9 +7,9 @@ import './navdropdown.scss';
 
 type Iprops = {
   link: string;
-  children: string[] | null;
+  items: string[] | null;
 };
-const NavDropdown = ({ link, children }: Iprops) => {
+const NavDropdown = ({ link, items }: Iprops) => {
   const [active, setActive] = useState<boolean>(false);
 
   return (
@@ -27,12 +27,12 @@ const NavDropdown = ({ link, children }: Iprops) => {
         >
           {link}
         </span>
-        {active ? <UpArrow /> : children ? <DownArrow /> : ''}
+        {active ? <UpArrow /> : items ? <DownArrow /> : ''}
       </button>
       <div className='dropdown-container__dropdown'>
         {active &&
-          children?.map((el) => (
-            <div>
+          items?.map((el) => (
+            <div key={el}>
               <Link href={'/'}>
                 <span className='dropdown-container__dropdown__link'>
                   <span>{el}</span>

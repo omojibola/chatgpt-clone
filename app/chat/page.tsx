@@ -12,17 +12,20 @@ import Mobilenav from '@/components/MobileNav/Mobilenav';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { generateRandomNumberWithDate } from '@/lib/utils';
+import Disclaimer from '@/components/Disclaimer/Disclaimer';
 
-type dataProps = {
+type Props = {
   id: string;
   data: any;
 };
-const page = () => {
+
+const ChatStatic = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(true);
   const [promptLoading, setPromptLoading] = useState(false);
-  const [texts, setTexts] = useState<dataProps[]>([]);
+  const [texts, setTexts] = useState<Props[]>([]);
   const [prompt, setPrompt] = useState<string>('');
   const { data: session } = useSession();
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   const router = useRouter();
   const [chats, loading, error] = useCollection(
@@ -79,12 +82,14 @@ const page = () => {
     const text = prompt.trim();
     const model = 'gpt-3.5-turbo';
 
+    let docId = generateRandomNumberWithDate();
+
     //toast
     try {
       setPromptLoading(true);
       let res = await axios.post('/api/askQuestion', {
         prompt: text,
-        chatId: generateRandomNumberWithDate(),
+        chatId: docId,
         model,
         session,
       });
@@ -94,6 +99,13 @@ const page = () => {
     } finally {
       setPromptLoading(false);
     }
+
+    router.push(`/chat/${docId}`);
+  };
+
+  //close disclaimer
+  const hideDisclaimer = () => {
+    setShowDisclaimer(false);
   };
 
   return (
@@ -102,6 +114,7 @@ const page = () => {
       <div className='chat-wrapper'>
         <Sidebar hideSidebar={hideSidebar} />
         <div className='chat-wrapper__chat-section'>
+          <Disclaimer close={hideDisclaimer} showDisclaimer={showDisclaimer} />
           {!showSidebar && (
             <span className=''>
               <button
@@ -197,4 +210,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ChatStatic;
